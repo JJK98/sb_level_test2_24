@@ -53,7 +53,7 @@ public class ArticleController {
     @PostMapping("/modify/{id}")
     public String articleModify(@Valid ArticleForm articleForm, BindingResult bindingResult, @PathVariable("id") Integer id){
         if (bindingResult.hasErrors()) {
-            return "question_form";
+            return "article_form";
         }
         Article article = this.articleService.getArticle(id);
         this.articleService.modify(article, articleForm.getTitle(), articleForm.getContent());
