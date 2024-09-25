@@ -4,6 +4,7 @@ import com.board.basic.user.SiteUser;
 import com.board.basic.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,9 @@ public class ArticleController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Article> articleList = this.articleService.getList();
-        model.addAttribute("articleList", articleList);
+    public String list(Model model,@RequestParam(value="page", defaultValue="0") int page,@RequestParam(value = "kw", defaultValue = "")String kw) {
+        Page<Article> paging = this.articleService.getList(page,kw);
+        model.addAttribute("paging", paging);
         return "article_list";
     }
 
